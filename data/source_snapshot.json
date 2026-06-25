@@ -49,7 +49,7 @@
       {"name": "조현준", "relationship": "본인", "class": "보통주", "shares": 4382245, "percent": 35.26},
       {"name": "(주)효성", "relationship": "계열회사", "class": "보통주", "shares": 3512445, "percent": 28.26},
       {"name": "(주)효성", "relationship": "계열회사", "class": "우선주", "shares": 869800, "percent": 7.00},
-      {"name": "효성아이티엑스(주)", "relationship": "계열회사", "class": "보통주", "shares": 519835, "percent": 4.18},
+      {"name": "효성아이티엑스(주)", "relationship": "자기주식", "class": "보통주", "shares": 519835, "percent": 4.18},
       {"name": "남경환", "relationship": "임원", "class": "보통주", "shares": 25000, "percent": 0.20}
     ],
     "ordinary_share_5pct_holders_q1_2026": [

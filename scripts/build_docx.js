@@ -318,8 +318,15 @@ const doc = new Document({
   ],
 });
 
-fs.mkdirSync(path.dirname(OUT), { recursive: true });
-Packer.toBuffer(doc).then((buffer) => {
+async function main() {
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  const buffer = await Packer.toBuffer(doc);
   fs.writeFileSync(OUT, buffer);
   console.log(OUT);
+}
+
+main().catch((error) => {
+  console.error("Failed to build DOCX.");
+  console.error(error && error.stack ? error.stack : error);
+  process.exitCode = 1;
 });

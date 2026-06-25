@@ -7,7 +7,7 @@
 - `deliverables/hyosung-itx-slogan-brief.docx`: 최종 Word 문서
 - `docs/hyosung_itx_slogan_brief.md`: 검토 가능한 원고
 - `data/source_snapshot.json`: 주요 수치와 출처 스냅샷
-- `DESIGN.md`: 문서 디자인 기준
+- `DESIGN.md`: Google Labs `design.md` 형식의 문서 디자인 토큰과 적용 기준
 
 ## Robot Review
 
@@ -25,8 +25,14 @@ OpenCode Review는 PR 번호와 base/head SHA를 입력으로 받아 수동 실�
 ## Rebuild
 
 ```bash
-NODE_PATH=/Users/seonghobae/node_modules \
-/Users/seonghobae/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/build_docx.js
+npm install --no-save docx
+node scripts/build_docx.js
+```
+
+`DESIGN.md` 형식은 Google Labs `design.md` CLI로 검증할 수 있습니다.
+
+```bash
+npx -p @google/design.md designmd lint DESIGN.md
 ```
 
 생성 결과는 `deliverables/hyosung-itx-slogan-brief.docx`입니다.
