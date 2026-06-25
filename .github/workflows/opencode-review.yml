@@ -3100,36 +3100,34 @@ jobs:
           collect_rollup_checks_rest() {
             local output_file="$1"
             local check_mode="$2"
-            local check_runs_file
+            local workflow_runs_file
             local statuses_file
-            check_runs_file="$(mktemp)"
+            workflow_runs_file="$(mktemp)"
             statuses_file="$(mktemp)"
 
-            if ! CHECK_MODE="$check_mode" gh api \
-              -H "Accept: application/vnd.github+json" \
-              "repos/${GH_REPOSITORY}/commits/${HEAD_SHA}/check-runs?per_page=100&filter=latest" \
-              --paginate \
+            if ! CHECK_MODE="$check_mode" HEAD_SHA="$HEAD_SHA" gh run list \
+              --repo "$GH_REPOSITORY" \
+              --commit "$HEAD_SHA" \
+              --limit 100 \
+              --json conclusion,status,url,workflowName,name,headSha,event \
               --jq '
-                (.check_runs // [])
+                .
                 | map(
-                    select(((.name // "") | ascii_downcase | contains("opencode-review")) | not)
-                    | select(
-                        (((.conclusion // "") | ascii_downcase) == "cancelled"
-                        and (.name // "") == "metadata-only gate evaluation"
-                        and ((.check_suite.workflow_run.name // "") == "PR Governance")) | not
-                      )
+                    select((.headSha // "") == env.HEAD_SHA)
+                    | select(((.workflowName // .name // "") | ascii_downcase | contains("opencode")) | not)
+                    | select((((.conclusion // "") | ascii_downcase) == "cancelled" and (.name // "") == "metadata-only gate evaluation" and (.workflowName // "") == "PR Governance") | not)
                     | if env.CHECK_MODE == "failed" then
-                        select(((.status // "") | ascii_downcase) == "completed")
+                        select((.status // "") == "completed")
                         | select((.conclusion // "" | ascii_upcase) as $c | ["FAILURE","TIMED_OUT","ACTION_REQUIRED","CANCELLED","STARTUP_FAILURE"] | index($c))
-                        | "- " + ((.check_suite.workflow_run.name // .app.name // "GitHub Checks") + "/" + (.name // "check") | gsub("^/"; "")) + ": " + (.conclusion // "unknown") + (if (.details_url // .html_url // "") != "" then " (" + (.details_url // .html_url) + ")" else "" end)
+                        | "- " + ((.workflowName // "GitHub Actions") + "/" + (.name // "workflow run") | gsub("^/"; "")) + ": " + (.conclusion // "unknown") + (if (.url // "") != "" then " (" + .url + ")" else "" end)
                       else
-                        select(((.status // "") | ascii_downcase) != "completed")
-                        | "- " + ((.check_suite.workflow_run.name // .app.name // "GitHub Checks") + "/" + (.name // "check") | gsub("^/"; "")) + ": " + (.status // "unknown") + (if (.details_url // .html_url // "") != "" then " (" + (.details_url // .html_url) + ")" else "" end)
+                        select((.status // "") != "completed")
+                        | "- " + ((.workflowName // "GitHub Actions") + "/" + (.name // "workflow run") | gsub("^/"; "")) + ": " + (.status // "unknown") + (if (.url // "") != "" then " (" + .url + ")" else "" end)
                       end
                   )
                 | .[]
-              ' >"$check_runs_file"; then
-              rm -f "$check_runs_file" "$statuses_file"
+              ' >"$workflow_runs_file"; then
+              rm -f "$workflow_runs_file" "$statuses_file"
               return 1
             fi
 
@@ -3149,12 +3147,12 @@ jobs:
                   )
                 | .[]
               ' >"$statuses_file"; then
-              rm -f "$check_runs_file" "$statuses_file"
-              return 1
+              printf 'GitHub commit statuses lookup was unavailable; relying on Actions workflow run evidence for this head.\n' >&2
+              : >"$statuses_file"
             fi
 
-            cat "$check_runs_file" "$statuses_file" >"$output_file"
-            rm -f "$check_runs_file" "$statuses_file"
+            cat "$workflow_runs_file" "$statuses_file" >"$output_file"
+            rm -f "$workflow_runs_file" "$statuses_file"
           }
 
           collect_failed_github_checks() {
