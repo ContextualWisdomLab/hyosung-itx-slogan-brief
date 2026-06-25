@@ -190,7 +190,7 @@ const doc = new Document({
         next: "Normal",
         quickFormat: true,
         run: { size: 28, bold: true, font: "Arial", color: COLORS.navy },
-        paragraph: { spacing: { before: 240, after: 120 } },
+        paragraph: { spacing: { before: 240, after: 120 }, outlineLevel: 0 },
       },
       {
         id: "Heading2",
@@ -199,7 +199,7 @@ const doc = new Document({
         next: "Normal",
         quickFormat: true,
         run: { size: 24, bold: true, font: "Arial", color: COLORS.navy },
-        paragraph: { spacing: { before: 180, after: 100 } },
+        paragraph: { spacing: { before: 180, after: 100 }, outlineLevel: 1 },
       },
     ],
   },
@@ -239,8 +239,14 @@ const doc = new Document({
   ],
 });
 
-Packer.toBuffer(doc).then((buffer) => {
+async function writeDoc() {
+  const buffer = await Packer.toBuffer(doc);
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, buffer);
   console.log(`Wrote ${OUT}`);
+}
+
+writeDoc().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
 });
