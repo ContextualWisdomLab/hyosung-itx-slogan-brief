@@ -5,7 +5,9 @@
 ## Deliverables
 
 - `deliverables/hyosung-itx-slogan-brief.docx`: 최종 Word 문서
+- `deliverables/hyosung-itx-slogan-proposal-materials-request.docx`: 슬로건 제안서 추가 자료 요청서
 - `docs/hyosung_itx_slogan_brief.md`: 검토 가능한 원고
+- `docs/hyosung_itx_slogan_proposal_materials_request.md`: 산업·마케팅 표준 기반 추가 자료 요청 원고
 - `data/source_snapshot.json`: 주요 수치와 출처 스냅샷
 - `DESIGN.md`: Google Labs `design.md` 형식의 문서 디자인 토큰과 적용 기준
 
@@ -27,6 +29,7 @@ OpenCode Review는 PR 번호와 base/head SHA를 입력으로 받아 수동 실�
 ```bash
 npm install --no-save docx
 node scripts/build_docx.js
+node scripts/build_materials_request_docx.js
 ```
 
 `DESIGN.md` 형식은 Google Labs `design.md` CLI로 검증할 수 있습니다.
@@ -35,4 +38,4 @@ node scripts/build_docx.js
 npx -p @google/design.md designmd lint DESIGN.md
 ```
 
-생성 결과는 `deliverables/hyosung-itx-slogan-brief.docx`입니다.
+생성 결과는 `deliverables/hyosung-itx-slogan-brief.docx`와 `deliverables/hyosung-itx-slogan-proposal-materials-request.docx`입니다.
