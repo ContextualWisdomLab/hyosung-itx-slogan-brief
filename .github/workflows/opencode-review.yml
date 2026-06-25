@@ -227,8 +227,8 @@ jobs:
       contents: read
       statuses: read
       deployments: read
-      pull-requests: read
-      issues: read
+      pull-requests: write
+      issues: write
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
@@ -1625,7 +1625,8 @@ jobs:
               || steps.opencode_review_second_fallback.outputs.review_status == 'success'
               || steps.opencode_review_o_series_fallback.outputs.review_status == 'success')
         env:
-          GH_TOKEN: ${{ steps.opencode_app_token.outputs.token || secrets.OPENCODE_APPROVE_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REVIEW_WRITE_TOKEN: ${{ steps.opencode_app_token.outputs.token || secrets.OPENCODE_APPROVE_TOKEN || secrets.GITHUB_TOKEN }}
           GH_REPOSITORY: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number || github.event.inputs.pr_number }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha || github.event.inputs.pr_head_sha }}
@@ -1907,12 +1908,9 @@ jobs:
           set -euo pipefail
           echo "::group::OpenCode Review Approval Gate"
           echo "PR=#${PR_NUMBER} head_sha=${HEAD_SHA} run_id=${RUN_ID} run_attempt=${RUN_ATTEMPT}"
-          approval_token_source="configured"
-          if [ -n "${OPENCODE_APP_TOKEN:-}" ]; then
-            export GH_TOKEN="$OPENCODE_APP_TOKEN"
-            approval_token_source="opencode-app"
-          fi
-          overview_comment_token="$GH_TOKEN"
+          approval_token_source="github-token-read"
+          review_write_token="${REVIEW_WRITE_TOKEN:-$GH_TOKEN}"
+          overview_comment_token="$review_write_token"
           echo "approval token source=${approval_token_source}"
 
           warn_gh_publication_failure() {
@@ -2105,7 +2103,8 @@ jobs:
               --arg body "$body" \
               --arg commit_id "$HEAD_SHA" \
               '{event: $event, body: $body, commit_id: $commit_id}' >"$review_payload_file"
-            if ! gh api -X POST "repos/${GH_REPOSITORY}/pulls/${PR_NUMBER}/reviews" --input "$review_payload_file" >/dev/null 2>"$gh_error_file"; then
+            if ! env GH_TOKEN="$review_write_token" \
+              gh api -X POST "repos/${GH_REPOSITORY}/pulls/${PR_NUMBER}/reviews" --input "$review_payload_file" >/dev/null 2>"$gh_error_file"; then
               warn_gh_publication_failure "pull review" "$gh_error_file"
               rm -f "$gh_error_file" "$review_payload_file"
               update_review_overview "$event" "$body"
@@ -2294,7 +2293,8 @@ jobs:
             local event="$1" body="$2" review_payload_file="$3" fallback_body_file="$4"
             local gh_error_file
             gh_error_file="$(mktemp)"
-            if ! gh api -X POST "repos/${GH_REPOSITORY}/pulls/${PR_NUMBER}/reviews" --input "$review_payload_file" >/dev/null 2>"$gh_error_file"; then
+            if ! env GH_TOKEN="$review_write_token" \
+              gh api -X POST "repos/${GH_REPOSITORY}/pulls/${PR_NUMBER}/reviews" --input "$review_payload_file" >/dev/null 2>"$gh_error_file"; then
               warn_gh_publication_failure "pull review inline comments" "$gh_error_file"
               rm -f "$gh_error_file"
               if [ -s "$fallback_body_file" ]; then
