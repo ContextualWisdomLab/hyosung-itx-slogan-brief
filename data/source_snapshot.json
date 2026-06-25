@@ -1,0 +1,87 @@
+{
+  "as_of": "2026-06-25",
+  "company_profile": {
+    "name": "효성ITX",
+    "founded": "1997-05-09",
+    "listed_market": "KOSPI",
+    "listed_year": "2007",
+    "representatives": "남경환, 홍혜진",
+    "headquarters": "서울시 영등포구 선유동2로 57 15층",
+    "official_business_summary": [
+      "Contact Center 사업",
+      "IT Service 사업",
+      "Display Solution 사업"
+    ],
+    "source": "https://www.hyosungitx.com/ko/company/overview.do"
+  },
+  "business_mix": {
+    "q1_2026": {
+      "revenue_million_krw": 130289,
+      "segments": [
+        {"name": "컨택센터 서비스", "revenue_million_krw": 101426, "share_percent": 77.85},
+        {"name": "IT 솔루션 및 서비스", "revenue_million_krw": 9401, "share_percent": 7.21},
+        {"name": "ITO", "revenue_million_krw": 7072, "share_percent": 5.43},
+        {"name": "Display Solution", "revenue_million_krw": 6987, "share_percent": 5.36},
+        {"name": "IDC", "revenue_million_krw": 3022, "share_percent": 2.32},
+        {"name": "AI", "revenue_million_krw": 2177, "share_percent": 1.67},
+        {"name": "기타 서비스", "revenue_million_krw": 204, "share_percent": 0.16}
+      ],
+      "source": "DART 분기보고서 2026.03, rcpNo=20260515001978"
+    },
+    "fy_2025": {
+      "revenue_million_krw": 519014,
+      "operating_profit_million_krw": 18959,
+      "net_profit_million_krw": 15453,
+      "segments": [
+        {"name": "컨택센터 서비스", "revenue_million_krw": 390073, "share_percent": 75.16},
+        {"name": "IT 솔루션 및 서비스", "revenue_million_krw": 41042, "share_percent": 7.91},
+        {"name": "Display Solution", "revenue_million_krw": 32276, "share_percent": 6.22},
+        {"name": "ITO", "revenue_million_krw": 25855, "share_percent": 4.98},
+        {"name": "IDC", "revenue_million_krw": 17356, "share_percent": 3.34},
+        {"name": "AI", "revenue_million_krw": 11501, "share_percent": 2.22},
+        {"name": "기타 서비스", "revenue_million_krw": 911, "share_percent": 0.17}
+      ],
+      "source": "DART 사업보고서 2025.12, rcpNo=20260318001001"
+    }
+  },
+  "special_relationships": {
+    "shareholders_q1_2026_total_issued_basis": [
+      {"name": "조현준", "relationship": "본인", "class": "보통주", "shares": 4382245, "percent": 35.26},
+      {"name": "(주)효성", "relationship": "계열회사", "class": "보통주", "shares": 3512445, "percent": 28.26},
+      {"name": "(주)효성", "relationship": "계열회사", "class": "우선주", "shares": 869800, "percent": 7.00},
+      {"name": "효성아이티엑스(주)", "relationship": "자기주식", "class": "보통주", "shares": 519835, "percent": 4.18},
+      {"name": "남경환", "relationship": "임원", "class": "보통주", "shares": 25000, "percent": 0.20}
+    ],
+    "ordinary_share_5pct_holders_q1_2026": [
+      {"name": "조현준", "shares": 4382245, "percent": 37.91},
+      {"name": "(주)효성", "shares": 3512445, "percent": 30.39}
+    ],
+    "group_affiliates_q1_2026": {"listed": 11, "unlisted": 137, "total": 148},
+    "domestic_affiliate_sales_fy_2025_million_krw": 39705,
+    "domestic_affiliate_sales_ratio_fy_2025_percent": 7.66,
+    "domestic_affiliate_purchases_fy_2025_million_krw": 8021,
+    "domestic_affiliate_purchase_ratio_fy_2025_percent": 1.71,
+    "source": "DART 분기보고서 2026.03 및 대규모기업집단현황공시 2026.06.01"
+  },
+  "disclosure_signals": {
+    "latest_filings": [
+      {"date": "2026-06-15", "title": "주주명부폐쇄기간또는기준일설정"},
+      {"date": "2026-06-01", "title": "기업지배구조보고서공시"},
+      {"date": "2026-06-01", "title": "대규모기업집단현황공시"},
+      {"date": "2026-05-15", "title": "분기보고서 (2026.03)"},
+      {"date": "2026-03-27", "title": "기업가치제고계획(자율공시)"},
+      {"date": "2026-03-18", "title": "사업보고서 (2025.12)"}
+    ],
+    "dividend_policy": "2026년 사업연도 배당성향 50% 이상 유지 목표",
+    "dividend_history": {
+      "dps_2025_krw": 750,
+      "cash_dividend_payout_ratio_2025_percent": 57.82,
+      "dividend_yield_2025_percent": 5.74
+    },
+    "sources": [
+      "https://www.hyosungitx.com/ko/investment/disclosureData.do",
+      "https://kind.krx.co.kr/common/disclsviewer.do?acptno=20260327000313&docno=&method=search&viewerhost=",
+      "https://www.hyosungitx.com/ko/investment/stockInfo.do"
+    ]
+  }
+}
