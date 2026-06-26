@@ -11,23 +11,14 @@
 - `data/source_snapshot.json`: 주요 수치와 출처 스냅샷
 - `DESIGN.md`: Google Labs `design.md` 형식의 문서 디자인 토큰과 적용 기준
 
-## Robot Review
+## Governance
 
-이 저장소에는 `ContextualWisdomLab/.github`에서 가져온 OpenCode Review 워크플로가 포함되어 있습니다.
-
-- `.github/workflows/opencode-review.yml`
-- `.github/workflows/pr-review-merge-scheduler.yml`
-- `scripts/ci/*`
-- `requirements-opencode-review-ci.txt`
-- `opencode.jsonc`
-- `ci-review-prompt.md`
-
-OpenCode Review는 PR 번호와 base/head SHA를 입력으로 받아 수동 실행할 수 있습니다.
+PR 검토, 보안 스캔, 병합 스케줄링은 조직의 `.github` 저장소에서 관리하는 required workflow로 실행합니다. 이 저장소에는 문서 산출물과 문서 생성 검증만 남깁니다.
 
 ## Rebuild
 
 ```bash
-npm install --no-save docx
+npm install --no-save --package-lock=false docx
 node scripts/build_docx.js
 node scripts/build_materials_request_docx.js
 ```
