@@ -1,5 +1,7 @@
 # Hyosung ITX Slogan Brief
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ContextualWisdomLab/hyosung-itx-slogan-brief)
+
 효성ITX 신규 슬로건 제작을 위한 리서치 브리프입니다. 기업 분석, 특수 관계 분석, 사업 분석, 기업 공시 분석을 한 문서로 묶고, 그 근거에서 도출한 슬로건 후보와 최종 권고안을 제시합니다.
 
 ## Deliverables
