@@ -4,9 +4,18 @@ on:
   pull_request:
     branches:
       - main
+    # NOTE: this is an enumerated allowlist of genuinely CI-inert docs, not a
+    # blanket "docs/**"/"*.md" ignore. The Build DOCX step below parses
+    # docs/hyosung_itx_slogan_proposal_materials_request.md as build input
+    # (see scripts/build_materials_request_docx.js), so that file must keep
+    # triggering this workflow. Any new/unlisted doc path defaults to
+    # triggering CI (safe by default) rather than being silently skipped.
     paths-ignore:
-      - "docs/**"
-      - "*.md"
+      - "README.md"
+      - "AGENTS.md"
+      - "DESIGN.md"
+      - "docs/hyosung_itx_slogan_brief.md"
+      - "docs/training/**"
   workflow_dispatch:
 
 permissions:
