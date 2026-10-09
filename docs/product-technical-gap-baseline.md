@@ -1,7 +1,7 @@
 # Product and technical gap baseline
 
 Status: Proposed  
-Evidence date: 2026-10-03  
+Evidence date: 2026-10-09  
 Canonical repository: `ContextualWisdomLab/hyosung-itx-slogan-brief`
 
 ## Goal and product boundary
@@ -104,7 +104,7 @@ buyer value and requires a future ADR tied to a concrete multi-user workflow.
 | Gap | Evidence | Action | Status |
 | --- | --- | --- | --- |
 | Rights and reuse authority is incomplete | Issue #9; no root `LICENSE` | Record contract/assignment constraints, embedded assets, marks, attribution, and any separately licensable tooling before granting reuse | Blocked |
-| PR #8 is behind protected `main` | `main@c0a6c1ea2718721c74553a5be388f64af0dffada`; PR predecessor head `1d5f3b9d844b7d42e3facc8aa3c936d401ccaf15` was 2 ahead/2 behind | Non-force merge/reconcile protected `main` into the writer branch, preserve both deltas, then rerun exact-head checks | Proposed |
+| PR #8 alignment with protected `main` | Native merge `f2bb1a3a710c30c188f9da4da607e8b139dc0835` has parents `4572161dec213310a9923b71f5e0f7740a7e12a4` and `main@c0a6c1ea2718721c74553a5be388f64af0dffada`; compare reports 4 ahead / 0 behind | Preserve the fast-forward-only history and evaluate Checks on the final exact head after this evidence repair | Implemented |
 | Public policy expansion needs explicit review | PR #8 review thread and current `CHANGES_REQUESTED` review | Keep the PR Draft until scope is explicit, the thread is resolved by its reviewer/owner, and a current-head review is recorded | In progress |
 | Node dependency resolution is mutable | README uses `npm install --no-save --package-lock=false docx` and unpinned `npx` | Add a minimal manifest/lock and CI rebuild contract; verify generated files from the locked toolchain | Proposed |
 | Evidence can age silently | Snapshot date is `2026-06-25` | Require source revalidation and a new snapshot before a new proposal or external campaign use | Implemented in PR #8 |
@@ -113,19 +113,19 @@ buyer value and requires a future ADR tied to a concrete multi-user workflow.
 ## Verification authority
 
 Historical success on a predecessor head does not prove a newer head. PR #8
-must be evaluated against its current exact head after every commit. The
-previous PR Validation, SAST Semgrep, and Security Scan runs for
-`1d5f3b9d844b7d42e3facc8aa3c936d401ccaf15` remain historical evidence only
-after this baseline commit.
+must be evaluated against its current exact head after every commit. The prior PR Validation, SAST Semgrep, and Security Scan runs for
+`1d5f3b9d844b7d42e3facc8aa3c936d401ccaf15` remain historical evidence only.
+Native merge `f2bb1a3a710c30c188f9da4da607e8b139dc0835` proves non-force reconciliation,
+but its Checks do not prove the later documentation commit that records that
+fact. Only fresh terminal results attached to the final exact head are current.
 
 ## Next bounded actions
 
-1. Reconcile protected `main` into PR #8 without force push or destructive
-   rebase.
-2. Obtain fresh terminal checks and address every current-head review finding.
-3. Complete issue #9 rights diligence before adding any repository-wide or
+1. Obtain fresh terminal checks on the final exact head and address every
+   current-head review finding.
+2. Complete issue #9 rights diligence before adding any repository-wide or
    scoped reuse grant.
-4. Pin the smallest viable Node.js build toolchain and prove deterministic
+3. Pin the smallest viable Node.js build toolchain and prove deterministic
    regeneration of both DOCX deliverables.
-5. Create an immutable release only when those gates are satisfied; do not
+4. Create an immutable release only when those gates are satisfied; do not
    claim GitHub Pages or deployment without publication evidence.
