@@ -1,7 +1,7 @@
 # Product and technical gap baseline
 
-Status: Proposed  
-Evidence date: 2026-10-09  
+Status: Proposed
+Evidence date: 2026-10-09
 Canonical repository: `ContextualWisdomLab/hyosung-itx-slogan-brief`
 
 ## Goal and product boundary
