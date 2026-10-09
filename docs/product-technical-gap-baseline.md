@@ -20,7 +20,7 @@ understand exactly which rights are and are not granted.
 | Need | Acceptance evidence | Status |
 | --- | --- | --- |
 | Review the proposal without opaque binaries | Markdown sources and dated `data/source_snapshot.json` remain authoritative inputs | Implemented |
-| Rebuild the Word deliverables | Build scripts regenerate both files and CI detects source/output drift | Partially implemented |
+| Rebuild the Word deliverables | Locked build scripts regenerate both files and CI checks the exact PR head | Implemented in PR #8 |
 | Know whether evidence is current | README exposes the `2026-06-25` snapshot date and requires revalidation before new use | Implemented in PR #8 |
 | Know whether reuse is permitted | Rights diligence records ownership, exclusions, attribution, and grant scope | Blocked by issue #9 |
 | Understand product responsibility | README and this baseline distinguish research deliverables from official adoption and external authorities | Proposed in PR #8 |
@@ -35,9 +35,8 @@ The technical flow is intentionally small:
 4. validate the document design contract and source/output consistency in CI;
 5. merge only an exact head with terminal checks and repository-governed review.
 
-The current README rebuild commands resolve mutable npm packages without a
-committed lockfile. That is usable for exploration, but it is not yet a
-reproducible or supply-chain-pinned release process.
+The committed private npm manifest and lockfile make dependency resolution
+reviewable. The build remains a document pipeline, not a product runtime.
 
 ## Context Map
 
@@ -106,7 +105,9 @@ buyer value and requires a future ADR tied to a concrete multi-user workflow.
 | Rights and reuse authority is incomplete | Issue #9; no root `LICENSE` | Record contract/assignment constraints, embedded assets, marks, attribution, and any separately licensable tooling before granting reuse | Blocked |
 | PR #8 alignment with protected `main` | Native merge `f2bb1a3a710c30c188f9da4da607e8b139dc0835` has parents `4572161dec213310a9923b71f5e0f7740a7e12a4` and `main@c0a6c1ea2718721c74553a5be388f64af0dffada`; compare reports 4 ahead / 0 behind | Preserve the fast-forward-only history and evaluate Checks on the final exact head after this evidence repair | Implemented |
 | Public policy expansion needs explicit review | PR #8 review thread and current `CHANGES_REQUESTED` review | Keep the PR Draft until scope is explicit, the thread is resolved by its reviewer/owner, and a current-head review is recorded | In progress |
-| Node dependency resolution is mutable | README uses `npm install --no-save --package-lock=false docx` and unpinned `npx` | Add a minimal manifest/lock and CI rebuild contract; verify generated files from the locked toolchain | Proposed |
+| DOCX dependency resolution was mutable | RED contract at `ba7c11df3bd8fcb30cd68d8decb724a0ed86d53f`; `package.json`, `package-lock.json`, and exact-head CI in this PR | Preserve exact `docx` version and lock integrity; update both in one reviewed change | Implemented in PR #8 |
+| DOCX archives are not byte-reproducible | Two consecutive locked builds changed only `docProps/core.xml` timestamps and ZIP metadata | Normalize document timestamps in the owner scripts, then add a byte-drift gate without excluding metadata | Proposed |
+| Optional design lint command remains mutable | README invokes unpinned `npx -p @google/design.md` outside CI | Pin it only when design lint becomes a governed release check | Proposed |
 | Evidence can age silently | Snapshot date is `2026-06-25` | Require source revalidation and a new snapshot before a new proposal or external campaign use | Implemented in PR #8 |
 | No immutable release evidence | No versioned release is asserted by current repository evidence | Publish only after rights, deterministic build, exact-head checks, and review gates are satisfied | Proposed |
 
@@ -125,7 +126,7 @@ fact. Only fresh terminal results attached to the final exact head are current.
    current-head review finding.
 2. Complete issue #9 rights diligence before adding any repository-wide or
    scoped reuse grant.
-3. Pin the smallest viable Node.js build toolchain and prove deterministic
-   regeneration of both DOCX deliverables.
+3. Normalize DOCX timestamps and add a byte-for-byte drift gate before release;
+   do not treat identical document bodies as deterministic archives.
 4. Create an immutable release only when those gates are satisfied; do not
    claim GitHub Pages or deployment without publication evidence.

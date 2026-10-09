@@ -28,10 +28,13 @@
 문서 생성에는 Node.js와 `docx` 패키지가 필요합니다. 저장소 루트에서 다음 명령으로 현재 Markdown 원고를 Word 산출물로 다시 생성할 수 있습니다.
 
 ```bash
-npm install --no-save --package-lock=false docx
-node scripts/build_docx.js
-node scripts/build_materials_request_docx.js
+npm ci
+npm test
+npm run build
 ```
+
+`package-lock.json` is the dependency authority for regeneration. Pull-request
+validation checks out the pull request's exact head before installing it.
 
 문서 디자인 규칙은 Google Labs `design.md` CLI로 검사할 수 있습니다.
 

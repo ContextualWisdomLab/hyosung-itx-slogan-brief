@@ -4,8 +4,9 @@ Cross-agent conventions for this repository, readable by any coding agent
 (Claude, Codex, Cursor, opencode, ...). This repo produces the Hyosung ITX
 slogan research brief: Markdown manuscripts and JSON sources under `docs/` and
 `data/`, rendered to `.docx` by Node scripts in `scripts/` (they pull the
-`docx` npm package ad-hoc via `npm install --no-save`; no lockfile is
-committed).
+`docx` npm package through the committed `package-lock.json`). Run `npm ci`,
+`npm test`, and `npm run build`; do not replace the locked dependency with an
+ad-hoc install.
 
 <!-- BEGIN cwl-agent-guidance -->
 ## Agent guidance (CWL governance)
