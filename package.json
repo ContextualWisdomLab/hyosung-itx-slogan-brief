@@ -1,0 +1,15 @@
+{
+  "name": "hyosung-itx-slogan-brief",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "node scripts/build_docx.js && node scripts/build_materials_request_docx.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "docx": "9.9.0"
+  }
+}

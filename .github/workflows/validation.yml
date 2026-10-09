@@ -27,11 +27,16 @@ jobs:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
+
+      - name: Assert exact head
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
 
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -39,9 +44,13 @@ jobs:
           node-version: 24
 
       - name: Install Node dependencies
-        run: npm install --no-save --package-lock=false docx
+        run: npm ci --ignore-scripts
+
+      - name: Test build contract
+        run: npm test
 
       - name: Build DOCX
-        run: |
-          node scripts/build_docx.js
-          node scripts/build_materials_request_docx.js
+        run: npm run build
+
+      - name: Verify committed deliverables
+        run: git diff --exit-code -- deliverables/
