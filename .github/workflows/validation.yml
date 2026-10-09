@@ -51,3 +51,6 @@ jobs:
 
       - name: Build DOCX
         run: npm run build
+
+      - name: Verify committed deliverables
+        run: git diff --exit-code -- deliverables/

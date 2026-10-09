@@ -34,6 +34,7 @@ test("PR validation installs the lockfile and checks the exact head", () => {
   assert.doesNotMatch(workflow, /npm install --no-save/);
   assert.match(workflow, /github\.event\.pull_request\.head\.sha/);
   assert.match(workflow, /git rev-parse HEAD/);
+  assert.match(workflow, /git diff --exit-code -- deliverables\//);
 });
 
 test("locked builds reproduce both DOCX archives byte for byte", () => {

@@ -106,7 +106,7 @@ buyer value and requires a future ADR tied to a concrete multi-user workflow.
 | PR #8 alignment with protected `main` | Native merge `f2bb1a3a710c30c188f9da4da607e8b139dc0835` has parents `4572161dec213310a9923b71f5e0f7740a7e12a4` and `main@c0a6c1ea2718721c74553a5be388f64af0dffada`; compare reports 4 ahead / 0 behind | Preserve the fast-forward-only history and evaluate Checks on the final exact head after this evidence repair | Implemented |
 | Public policy expansion needs explicit review | PR #8 review thread and current `CHANGES_REQUESTED` review | Keep the PR Draft until scope is explicit, the thread is resolved by its reviewer/owner, and a current-head review is recorded | In progress |
 | DOCX dependency resolution was mutable | RED contract at `ba7c11df3bd8fcb30cd68d8decb724a0ed86d53f`; `package.json`, `package-lock.json`, and exact-head CI in this PR | Preserve exact `docx` version and lock integrity; update both in one reviewed change | Implemented in PR #8 |
-| DOCX archives are not byte-reproducible | Two consecutive locked builds changed only `docProps/core.xml` timestamps and ZIP metadata | Normalize document timestamps in the owner scripts, then add a byte-drift gate without excluding metadata | Proposed |
+| DOCX archives were not byte-reproducible | RED test at `1b0b2abfae29dec1dd7072063df618580eaf50ae`; repeated builds changed `docProps/core.xml` timestamps and ZIP metadata | Process-local `SOURCE_DATE_EPOCH` clock plus exact byte-drift CI check | Implemented in PR #8 |
 | Optional design lint command remains mutable | README invokes unpinned `npx -p @google/design.md` outside CI | Pin it only when design lint becomes a governed release check | Proposed |
 | Evidence can age silently | Snapshot date is `2026-06-25` | Require source revalidation and a new snapshot before a new proposal or external campaign use | Implemented in PR #8 |
 | No immutable release evidence | No versioned release is asserted by current repository evidence | Publish only after rights, deterministic build, exact-head checks, and review gates are satisfied | Proposed |
@@ -126,7 +126,8 @@ fact. Only fresh terminal results attached to the final exact head are current.
    current-head review finding.
 2. Complete issue #9 rights diligence before adding any repository-wide or
    scoped reuse grant.
-3. Normalize DOCX timestamps and add a byte-for-byte drift gate before release;
-   do not treat identical document bodies as deterministic archives.
-4. Create an immutable release only when those gates are satisfied; do not
+3. Preserve the byte-for-byte drift gate and investigate any generated change
+   before release.
+4. Create an immutable release only when rights and review gates are satisfied;
+   do not
    claim GitHub Pages or deployment without publication evidence.

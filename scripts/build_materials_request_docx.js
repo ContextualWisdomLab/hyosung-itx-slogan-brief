@@ -1,5 +1,9 @@
 const fs = require("fs");
 const path = require("path");
+const { installReproducibleClock } = require("./install_reproducible_clock");
+
+installReproducibleClock();
+
 const {
   AlignmentType,
   BorderStyle,

@@ -34,7 +34,9 @@ npm run build
 ```
 
 `package-lock.json` is the dependency authority for regeneration. Pull-request
-validation checks out the pull request's exact head before installing it.
+validation checks out the pull request's exact head before installing it and
+rejects generated-file drift. Builders use the evidence snapshot timestamp by
+default; release tooling may set the standard `SOURCE_DATE_EPOCH` value.
 
 문서 디자인 규칙은 Google Labs `design.md` CLI로 검사할 수 있습니다.
 

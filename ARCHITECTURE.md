@@ -15,7 +15,8 @@ Core dependency.
 3. The generated files under `deliverables/` are distribution artifacts.
 4. `.github/workflows/validation.yml` checks the pull request's exact head,
    installs `package-lock.json`, runs the contract test, and rebuilds both
-   artifacts.
+   artifacts. A process-local `SOURCE_DATE_EPOCH` clock normalizes document and
+   ZIP timestamps before CI checks the committed artifacts byte for byte.
 
 Rights diligence remains outside the build aggregate and is tracked in issue
 #9. Build success is not evidence of trademark clearance, adoption, or a reuse
