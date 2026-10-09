@@ -5,6 +5,8 @@
  * diagnose dependency/bootstrap drift before installing project packages.
  */
 const assert = require("node:assert/strict");
+const { execFileSync } = require("node:child_process");
+const { createHash } = require("node:crypto");
 const { readFileSync } = require("node:fs");
 const test = require("node:test");
 
@@ -32,4 +34,18 @@ test("PR validation installs the lockfile and checks the exact head", () => {
   assert.doesNotMatch(workflow, /npm install --no-save/);
   assert.match(workflow, /github\.event\.pull_request\.head\.sha/);
   assert.match(workflow, /git rev-parse HEAD/);
+});
+
+test("locked builds reproduce both DOCX archives byte for byte", () => {
+  const outputs = [
+    "deliverables/hyosung-itx-slogan-brief.docx",
+    "deliverables/hyosung-itx-slogan-proposal-materials-request.docx",
+  ];
+  const build = () => {
+    execFileSync(process.execPath, ["scripts/build_docx.js"], { stdio: "ignore" });
+    execFileSync(process.execPath, ["scripts/build_materials_request_docx.js"], { stdio: "ignore" });
+    return outputs.map((path) => createHash("sha256").update(readFileSync(path)).digest("hex"));
+  };
+
+  assert.deepEqual(build(), build());
 });
